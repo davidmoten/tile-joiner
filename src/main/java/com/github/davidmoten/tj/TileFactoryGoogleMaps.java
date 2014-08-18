@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class TileFactoryGoogleMaps implements TileFactory {
+public class TileFactoryGoogleMaps {
 
 	// https://mts1.google.com/vt/lyrs=m&x=1325&y=3143&z=13 -- normal
 	// https://mts1.google.com/vt/lyrs=y&x=1325&y=3143&z=13 -- satellite
 	// https://mts1.google.com/vt/lyrs=t&x=1325&y=3143&z=13 -- terrain
 
-	@Override
-	public Collection<Tile> getCoverage(double lat1, double lon1, double lat2,
-			double lon2, long diffX, long diffY) {
+	public Collection<String> getCoverage(double lat1, double lon1,
+			double lat2, double lon2, long diffX, long diffY) {
 		final long tileSize = 256;
 		final double diffLat = Math.abs(lat1 - lat2);
 		final double diffLon = Math.abs(lon1 - lon2);
@@ -22,12 +21,12 @@ public class TileFactoryGoogleMaps implements TileFactory {
 			// diffLat*tileSize/diffY
 			// i.e 2^n >180 * diffY/(diffLat*tileSize)
 			// of n> ln(180*diffY/diffLat/tileSize)/ln(2)
-			zoom = (int) (Math.round(Math.floor(Math.log(180 * diffY / diffLat
-					/ tileSize)
+			zoom = (int) (Math.round(Math.floor(Math.log(180.0 * diffY
+					/ diffLat / tileSize)
 					/ Math.log(2))) + 1);
 		} else {
-			zoom = (int) (Math.round(Math.floor(Math.log(360 * diffX / diffLon
-					/ tileSize)
+			zoom = (int) (Math.round(Math.floor(Math.log(360.0 * diffX
+					/ diffLon / tileSize)
 					/ Math.log(2))) + 1);
 		}
 
@@ -38,15 +37,26 @@ public class TileFactoryGoogleMaps implements TileFactory {
 		final int maxIndexX = Math.max(index1.getX(), index2.getX());
 		final int maxIndexY = Math.max(index1.getX(), index2.getY());
 
-		final List<Tile> list = new ArrayList<>();
+		final List<Tile> tiles = new ArrayList<>();
 		for (int x = minIndexX; x <= maxIndexX; x++)
 			for (int y = minIndexY; y <= maxIndexY; y++) {
-				list.add(new Tile(new TileIndex(x, y), zoom));
+				tiles.add(new Tile(new TileIndex(x, y), zoom));
 			}
-		return list;
+		final List<String> result = new ArrayList<>();
+		for (final Tile tile : tiles) {
+			result.add(toUrl(tile));
+		}
+		return result;
 	}
 
-	private static TileIndex getIndexFor(double lat, double lon, int zoom) {
+	private static String toUrl(Tile tile) {
+		return String.format(
+				"https://mts1.google.com/vt/lyrs=m&x=%s&y=%s3&z=%s", tile
+						.getIndex().getX(), tile.getIndex().getY(), tile
+						.getZoom());
+	}
+
+	static TileIndex getIndexFor(double lat, double lon, int zoom) {
 		if (lat < -90 || lat > 90)
 			throw new IllegalArgumentException("lat must be in range -90 to 90");
 		if (lon < -180 || lon > 180)
@@ -61,12 +71,12 @@ public class TileFactoryGoogleMaps implements TileFactory {
 		lon = 180 + lon;
 
 		// find tile size from zoom level
-		final double latTileSize = 180 / (Math.pow(2, (17 - zoom)));
-		final double longTileSize = 360 / (Math.pow(2, (17 - zoom)));
+		final double latTileSize = 180 / (Math.pow(2, zoom));
+		final double longTileSize = 360 / (Math.pow(2, zoom));
 
 		// find the tile coordinates
-		final int tilex = (int) (lon / longTileSize);
-		final int tiley = (int) (lat / latTileSize);
+		final int tilex = (int) Math.round(Math.floor(lon / longTileSize));
+		final int tiley = (int) Math.round(Math.floor(lat / latTileSize));
 
 		return new TileIndex(tilex, tiley);
 	}
