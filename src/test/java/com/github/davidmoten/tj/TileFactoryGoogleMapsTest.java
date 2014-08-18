@@ -9,7 +9,7 @@ public class TileFactoryGoogleMapsTest {
 	@Test
 	public void test() {
 		final TileFactoryGoogleMaps g = new TileFactoryGoogleMaps();
-		for (final String url : g.getCoverage(-35, 149, -36, 150, 800, 600)) {
+		for (final String url : g.getCoverage(-35, 149, -37, 150, 800, 600)) {
 			System.out.println(url);
 		}
 	}

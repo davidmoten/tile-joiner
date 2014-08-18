@@ -17,6 +17,8 @@ public class TileFactoryGoogleMaps {
 		final double diffLon = Math.abs(lon1 - lon2);
 		final int zoom;
 		if (diffLat < diffLon) {
+			// TODO this not right because of mercator projection
+
 			// find biggest n>=0 such that (180/2^n) <
 			// diffLat*tileSize/diffY
 			// i.e 2^n >180 * diffY/(diffLat*tileSize)
@@ -24,6 +26,7 @@ public class TileFactoryGoogleMaps {
 			zoom = (int) (Math.round(Math.floor(Math.log(180.0 * diffY
 					/ diffLat / tileSize)
 					/ Math.log(2))) + 1);
+			throw new RuntimeException("not ready");
 		} else {
 			zoom = (int) (Math.round(Math.floor(Math.log(360.0 * diffX
 					/ diffLon / tileSize)
