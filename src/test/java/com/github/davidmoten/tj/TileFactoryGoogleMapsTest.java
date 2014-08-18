@@ -1,5 +1,7 @@
 package com.github.davidmoten.tj;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 public class TileFactoryGoogleMapsTest {
@@ -19,6 +21,9 @@ public class TileFactoryGoogleMapsTest {
 
 	@Test
 	public void test3() {
-		System.out.println(TileFactoryGoogleMaps.getIndexFor(-35, 144, 2));
+		final TileIndex t = TileFactoryGoogleMaps.getIndexFor(-35.3, 149.124,
+				10);
+		assertEquals(936, t.getX());
+		assertEquals(619, t.getY());
 	}
 }

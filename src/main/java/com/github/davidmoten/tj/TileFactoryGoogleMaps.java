@@ -63,21 +63,27 @@ public class TileFactoryGoogleMaps {
 			throw new IllegalArgumentException(
 					"lon must be in range -180 to 180");
 
-		// correct the latitude to go from 0 (north) to 180 (south),
-		// instead of 90(north) to -90(south)
-		lat = 90 - lat;
-
 		// correct the longitude to go from 0 to 360
 		lon = 180 + lon;
 
 		// find tile size from zoom level
-		final double latTileSize = 180 / (Math.pow(2, zoom));
 		final double longTileSize = 360 / (Math.pow(2, zoom));
 
 		// find the tile coordinates
 		final int tilex = (int) Math.round(Math.floor(lon / longTileSize));
-		final int tiley = (int) Math.round(Math.floor(lat / latTileSize));
+		final int tiley = latToTileY(lat, zoom);
 
 		return new TileIndex(tilex, tiley);
 	}
+
+	private static int latToTileY(double lat, int zoom) {
+		Double exp = Math.sin(lat * Math.PI / 180);
+		if (exp < -.9999)
+			exp = -.9999;
+		if (exp > .9999)
+			exp = .9999;
+		return (int) (Math.round(256 * (Math.pow(2, zoom - 1))) + ((.5 * Math
+				.log((1 + exp) / (1 - exp))) * ((-256 * (Math.pow(2, zoom))) / (2 * Math.PI)))) / 256;
+	}
+
 }
