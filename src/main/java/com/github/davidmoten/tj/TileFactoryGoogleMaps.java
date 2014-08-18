@@ -33,9 +33,9 @@ public class TileFactoryGoogleMaps {
 		final TileIndex index1 = getIndexFor(lat1, lon1, zoom);
 		final TileIndex index2 = getIndexFor(lat2, lon2, zoom);
 		final int minIndexX = Math.min(index1.getX(), index2.getX());
-		final int minIndexY = Math.min(index1.getX(), index2.getY());
+		final int minIndexY = Math.min(index1.getY(), index2.getY());
 		final int maxIndexX = Math.max(index1.getX(), index2.getX());
-		final int maxIndexY = Math.max(index1.getX(), index2.getY());
+		final int maxIndexY = Math.max(index1.getY(), index2.getY());
 
 		final List<Tile> tiles = new ArrayList<>();
 		for (int x = minIndexX; x <= maxIndexX; x++)
