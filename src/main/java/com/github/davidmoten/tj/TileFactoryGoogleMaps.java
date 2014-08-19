@@ -35,6 +35,8 @@ public class TileFactoryGoogleMaps {
 
 		final TileIndex index1 = getIndexFor(lat1, lon1, zoom);
 		final TileIndex index2 = getIndexFor(lat2, lon2, zoom);
+		System.out.println("index1=" + index1 + ", index2=" + index2
+				+ ", zoom=" + zoom);
 		final int minIndexX = Math.min(index1.getX(), index2.getX());
 		final int minIndexY = Math.min(index1.getY(), index2.getY());
 		final int maxIndexX = Math.max(index1.getX(), index2.getX());
@@ -54,7 +56,7 @@ public class TileFactoryGoogleMaps {
 
 	private static String toUrl(Tile tile) {
 		return String.format(
-				"https://mts1.google.com/vt/lyrs=m&x=%s&y=%s3&z=%s", tile
+				"https://mts1.google.com/vt/lyrs=m&x=%s&y=%s&z=%s", tile
 						.getIndex().getX(), tile.getIndex().getY(), tile
 						.getZoom());
 	}
