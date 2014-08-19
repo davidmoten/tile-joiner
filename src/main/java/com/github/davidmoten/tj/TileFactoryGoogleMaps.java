@@ -6,13 +6,14 @@ import java.util.List;
 
 public class TileFactoryGoogleMaps {
 
+	private static final int TILE_SIZE = 256;
+
 	// https://mts1.google.com/vt/lyrs=m&x=1325&y=3143&z=13 -- normal
 	// https://mts1.google.com/vt/lyrs=y&x=1325&y=3143&z=13 -- satellite
 	// https://mts1.google.com/vt/lyrs=t&x=1325&y=3143&z=13 -- terrain
 
 	public Collection<String> getCoverage(double lat1, double lon1,
 			double lat2, double lon2, long diffX, long diffY) {
-		final long tileSize = 256;
 		final double diffLat = Math.abs(lat1 - lat2);
 		final double diffLon = Math.abs(lon1 - lon2);
 		final int zoom;
@@ -24,12 +25,12 @@ public class TileFactoryGoogleMaps {
 			// i.e 2^n >180 * diffY/(diffLat*tileSize)
 			// of n> ln(180*diffY/diffLat/tileSize)/ln(2)
 			zoom = (int) (Math.round(Math.floor(Math.log(180.0 * diffY
-					/ diffLat / tileSize)
+					/ diffLat / TILE_SIZE)
 					/ Math.log(2))) + 1);
 			throw new RuntimeException("not ready");
 		} else {
 			zoom = (int) (Math.round(Math.floor(Math.log(360.0 * diffX
-					/ diffLon / tileSize)
+					/ diffLon / TILE_SIZE)
 					/ Math.log(2))) + 1);
 		}
 
@@ -82,13 +83,25 @@ public class TileFactoryGoogleMaps {
 	}
 
 	private static int latToTileY(double lat, int zoom) {
+		double y = latToY(lat, zoom);
+		return (int) y / 256;
+	}
+
+	public static int latToYInTile(double lat, int zoom) {
+		double y = latToY(lat, zoom);
+		return (int) Math.round(Math.floor(y - TILE_SIZE * ((int) y / 256)));
+	}
+
+	private static double latToY(double lat, int zoom) {
 		Double exp = Math.sin(lat * Math.PI / 180);
 		if (exp < -.9999)
 			exp = -.9999;
-		if (exp > .9999)
+		else if (exp > .9999)
 			exp = .9999;
-		return (int) (Math.round(256 * (Math.pow(2, zoom - 1))) + ((.5 * Math
-				.log((1 + exp) / (1 - exp))) * ((-256 * (Math.pow(2, zoom))) / (2 * Math.PI)))) / 256;
+		double y = (Math.round(TILE_SIZE * (Math.pow(2, zoom - 1))) + ((.5 * Math
+				.log((1 + exp) / (1 - exp))) * ((-TILE_SIZE * (Math
+				.pow(2, zoom))) / (2 * Math.PI))));
+		return y;
 	}
 
 }
