@@ -23,7 +23,8 @@ public class TileCache {
 
 	public BufferedImage getImage(String url) {
 		String key = "tile-joiner-"
-				+ BaseEncoding.base32().encode(url.getBytes(Charsets.US_ASCII));
+				+ BaseEncoding.base64Url().encode(
+						url.getBytes(Charsets.US_ASCII));
 		File file = new File(directory, key);
 		if (!file.exists()) {
 			try {
