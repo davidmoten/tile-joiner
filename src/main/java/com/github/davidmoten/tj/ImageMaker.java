@@ -53,15 +53,21 @@ public class ImageMaker {
 	private void drawMap(Graphics2D g) {
 		List<TileUrl> tiles = new TileFactoryGoogleMaps().getCoverage(lat1,
 				lon1, lat2, lon2, widthPixels, heightPixels);
+
 		TileUrl first = tiles.get(0);
+
+		int zoom = first.getTile().getZoom();
+		int deltaY = TileFactoryGoogleMaps.latToYInTile(lat1, zoom);
+		int deltaX = TileFactoryGoogleMaps.longToXInTile(lon1, zoom);
+
 		for (TileUrl tile : tiles) {
 			BufferedImage img = cache.getImage(tile.getUrl());
 			int x = (tile.getTile().getIndex().getX() - first.getTile()
 					.getIndex().getX())
-					* TileFactoryGoogleMaps.TILE_SIZE;
+					* TileFactoryGoogleMaps.TILE_SIZE - deltaX;
 			int y = (tile.getTile().getIndex().getY() - first.getTile()
 					.getIndex().getY())
-					* TileFactoryGoogleMaps.TILE_SIZE;
+					* TileFactoryGoogleMaps.TILE_SIZE - deltaY;
 			log.info("drawing image at {},{}", x, y);
 			g.drawImage(img, x, y, null);
 		}

@@ -91,6 +91,14 @@ public class TileFactoryGoogleMaps {
 		return (int) Math.round(Math.floor(y - TILE_SIZE * ((int) y / 256)));
 	}
 
+	public static int longToXInTile(double lon, int zoom) {
+		final double longTileSize = 360 / (Math.pow(2, zoom));
+
+		// find the tile coordinates
+		return (int) Math.round(TILE_SIZE
+				* (lon / longTileSize - Math.floor(lon / longTileSize)));
+	}
+
 	private static double latToY(double lat, int zoom) {
 		Double exp = Math.sin(lat * Math.PI / 180);
 		if (exp < -.9999)
