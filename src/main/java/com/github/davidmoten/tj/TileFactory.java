@@ -6,6 +6,11 @@ import java.util.List;
 public class TileFactory {
 
 	public static final int TILE_SIZE = 256;
+	private final String mapType;
+
+	public TileFactory(String mapType) {
+		this.mapType = mapType;
+	}
 
 	// https://mts1.google.com/vt/lyrs=m&x=1325&y=3143&z=13 -- normal
 	// https://mts1.google.com/vt/lyrs=y&x=1325&y=3143&z=13 -- satellite
@@ -49,16 +54,15 @@ public class TileFactory {
 			}
 		final List<TileUrl> result = new ArrayList<>();
 		for (final Tile tile : tiles) {
-			result.add(new TileUrl(tile, toUrl(tile)));
+			result.add(new TileUrl(tile, toUrl(tile, mapType)));
 		}
 		return result;
 	}
 
-	private static String toUrl(Tile tile) {
+	private static String toUrl(Tile tile, String mapType) {
 		return String.format(
-				"https://mts1.google.com/vt/lyrs=m&x=%s&y=%s&z=%s", tile
-						.getIndex().getX(), tile.getIndex().getY(), tile
-						.getZoom());
+				"https://mts1.google.com/vt/lyrs=%s&x=%s&y=%s&z=%s", mapType,
+				tile.getIndex().getX(), tile.getIndex().getY(), tile.getZoom());
 	}
 
 	static TileIndex getIndexFor(double lat, double lon, int zoom) {

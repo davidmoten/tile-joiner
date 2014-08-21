@@ -19,7 +19,7 @@ public class TileCache {
 
 	private static final TileCache instance = new TileCache();
 
-	public TileCache instance() {
+	public static TileCache instance() {
 		return instance;
 	}
 

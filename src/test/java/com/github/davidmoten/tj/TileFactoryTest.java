@@ -12,7 +12,7 @@ public class TileFactoryTest {
 
 	@Test
 	public void test() {
-		final TileFactory g = new TileFactory();
+		final TileFactory g = new TileFactory("m");
 		Collection<TileUrl> tiles = g.getCoverage(-35, 149, -37, 150, 800, 600);
 		Collection<String> urls = new HashSet<>();
 		for (final TileUrl tile : tiles) {

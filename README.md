@@ -22,11 +22,11 @@ You can generate an image using maven or direct from java.
  
 To create an image joined and cropped from google maps tiles:
 
-```bash
-mvn exec:java -Dlat1=-35 -Dlon1=149 -Dlat2=-37 -Dlon2=150 -Dwidth=1200 -Dheight=800
+```
+mvn exec:java -Dlat1=-35 -Dlon1=149 -Dlat2=-37 -Dlon2=150 -Dwidth=1200 -Dheight=800 -Dmap.type=m
 ```
  
-The image will be placed in ```target/map.png```.
+The image wil be a Google Maps Hybrid map and is created in ```target/map.png``` by default.
  
 ### Generate an image using java
 See [ImageMakerMain.java](src/main/java/com/github/davidmoten/tj/ImageMakerMain.java).

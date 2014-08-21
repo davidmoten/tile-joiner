@@ -23,7 +23,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.target>1.7</maven.compiler.target>
         <slf4j.version>1.7.7</slf4j.version>
         <rxjava.version>0.19.6</rxjava.version>
 
@@ -49,6 +49,8 @@
         <width>1200</width>
         <height>800</height>
         <output.file>${project.build.directory}/map.png</output.file>
+        <image.format>PNG</image.format>
+        <map.type>m</map.type>
     </properties>
 
     <licenses>
@@ -263,6 +265,8 @@
                         <argument>${width}</argument>
                         <argument>${height}</argument>
                         <argument>${output.file}</argument>
+                        <argument>${image.format}</argument>
+                        <arguments>${map.type}</arguments>
                     </arguments>
                 </configuration>
             </plugin>

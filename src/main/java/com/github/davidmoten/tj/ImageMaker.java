@@ -23,14 +23,17 @@ public class ImageMaker {
 	private final int heightPixels;
 	private final TileCache cache;
 
+	private final String mapType;
+
 	public ImageMaker(double lat1, double lon1, double lat2, double lon2,
-			int widthPixels, int heightPixels, TileCache cache) {
+			int widthPixels, int heightPixels, String mapType, TileCache cache) {
 		this.lat1 = lat1;
 		this.lon1 = lon1;
 		this.lat2 = lat2;
 		this.lon2 = lon2;
 		this.widthPixels = widthPixels;
 		this.heightPixels = heightPixels;
+		this.mapType = mapType;
 		this.cache = cache;
 	}
 
@@ -51,8 +54,8 @@ public class ImageMaker {
 	}
 
 	private void drawMap(Graphics2D g) {
-		List<TileUrl> tiles = new TileFactory().getCoverage(lat1,
-				lon1, lat2, lon2, widthPixels, heightPixels);
+		List<TileUrl> tiles = new TileFactory(mapType).getCoverage(lat1, lon1,
+				lat2, lon2, widthPixels, heightPixels);
 
 		TileUrl first = tiles.get(0);
 
@@ -71,5 +74,13 @@ public class ImageMaker {
 			log.info("drawing image at {},{}", x, y);
 			g.drawImage(img, x, y, null);
 		}
+	}
+
+	public static void createImage(double lat1, double lon1, double lat2,
+			double lon2, int width, int height, String filename,
+			String imageFormat, String mapType) {
+		new ImageMaker(lat1, lon1, lat2, lon2, width, height, mapType,
+				TileCache.instance()).createImage(new File(filename),
+				imageFormat);
 	}
 }
