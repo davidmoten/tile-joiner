@@ -4,7 +4,7 @@ tile-joiner
 Renders a group of (Google Maps) tiles to a BufferedImage in java and thence to a PNG for instance.
 
 How to build
-=============
+-------------
 To compiles, tests and builds the artifact locally:
 
  ```bash
@@ -12,14 +12,21 @@ To compiles, tests and builds the artifact locally:
  cd tile-joiner
  mvn clean install
  ```
- 
- To create an image joined and cropped from google maps tiles:
+Usage
+----------
+You can generate an image using maven or direct from java. 
+
+ ###Generate an image using maven
+  To create an image joined and cropped from google maps tiles:
  
  ```bash
  mvn exec:java -Dlat1=-35 -Dlon1=149 -Dlat2=-37 -Dlon2=150 -Dwidth=1200 -Dheight=800
  ```
  
  The image will be placed in ```target/map.png```.
+ 
+ ###Generate an image using java
+ See [ImageMakerMain.java](src/main/java/com/github/davidmoten/tj/ImageMakerMain.java).
  
  Tile cache
  =============
