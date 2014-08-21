@@ -31,6 +31,14 @@ The image wil be a Google Maps Hybrid map and is created in ```target/map.png```
 ### Generate an image using java
 See [ImageMakerMain.java](src/main/java/com/github/davidmoten/tj/ImageMakerMain.java).
 
+Map types
+-----------
+
+* ```m``` = roads
+* ```s``` = satellite
+* ```y``` = hybrid
+* ```h``` = roads overlay
+
 Tile cache
 =============
 Tiled images will be cached in ```System.getProperty("java.io.tmpdir")``` and start with 

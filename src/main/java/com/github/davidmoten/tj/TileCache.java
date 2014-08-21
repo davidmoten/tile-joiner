@@ -9,11 +9,16 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.base.Charsets;
 import com.google.common.io.BaseEncoding;
 import com.google.common.io.ByteStreams;
 
 public class TileCache {
+
+	private static final Logger log = LoggerFactory.getLogger(TileCache.class);
 
 	private final File directory;
 
@@ -38,6 +43,7 @@ public class TileCache {
 		File file = new File(directory, key);
 		if (!file.exists()) {
 			try {
+				log.info("getting " + url);
 				URL u = new URL(url);
 				file.getParentFile().mkdirs();
 				FileOutputStream fos = new FileOutputStream(file);
@@ -45,6 +51,7 @@ public class TileCache {
 				ByteStreams.copy(is, fos);
 				fos.close();
 				is.close();
+				log.info("got " + url);
 			} catch (IOException e) {
 				file.delete();
 				throw new RuntimeException(e);
