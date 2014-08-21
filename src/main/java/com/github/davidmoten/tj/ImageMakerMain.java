@@ -10,11 +10,20 @@ public class ImageMakerMain {
 		System.setProperty("https.proxyPort", "8080");
 		TileCache cache = new TileCache();
 		final TileFactory g = new TileFactory();
-		Collection<TileUrl> tiles = g.getCoverage(-35, 149, -37, 150, 800, 600);
+
+		double lat1 = Double.parseDouble(args[0]);
+		double lon1 = Double.parseDouble(args[1]);
+		double lat2 = Double.parseDouble(args[2]);
+		double lon2 = Double.parseDouble(args[3]);
+		int width = Integer.parseInt(args[4]);
+		int height = Integer.parseInt(args[5]);
+		String filename = args[6];
+		Collection<TileUrl> tiles = g.getCoverage(lat1, lon1, lat2, lon2,
+				width, height);
 		for (TileUrl tile : tiles)
 			cache.getImage(tile.getUrl());
-		new ImageMaker(-35, 149, -37, 150, 800, 600, cache).createImage(
-				new File("target/test.png"), "PNG");
+		new ImageMaker(lat1, lon1, lat2, lon2, width, height, cache)
+				.createImage(new File(filename), "PNG");
 
 	}
 
