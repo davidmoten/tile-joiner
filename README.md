@@ -3,7 +3,7 @@ tile-joiner
 
 Renders a Google Maps tiles to a BufferedImage in java and thence to a PNG for instance.
 
-Status: *alpha*
+Status: *pre-alpha*
 
 How to build
 -------------
@@ -23,7 +23,7 @@ You can generate an image using maven or direct from java.
 To create an image joined and cropped from google maps tiles:
 
 ```
-mvn exec:java -Dlat1=-35 -Dlon1=149 -Dlat2=-37 -Dlon2=150 -Dwidth=1200 -Dheight=800 -Dmap.type=m
+mvn exec:java -Dlat1=-35 -Dlon1=149 -Dlon2=150 -Dwidth=1200 -Dheight=800 -Dmap.type=m
 ```
  
 The image wil be a Google Maps Hybrid map and is created in ```target/map.png``` by default.
