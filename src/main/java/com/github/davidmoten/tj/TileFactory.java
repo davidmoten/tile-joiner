@@ -31,7 +31,7 @@ public class TileFactory {
 			zoom = (int) (Math.round(Math.floor(Math.log(180.0 * diffY
 					/ diffLat / TILE_SIZE)
 					/ Math.log(2))) + 1);
-			throw new RuntimeException("not ready");
+			// throw new RuntimeException("not implemented");
 		} else {
 			zoom = (int) (Math.round(Math.floor(Math.log(360.0 * diffX
 					/ diffLon / TILE_SIZE)
