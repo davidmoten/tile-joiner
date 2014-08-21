@@ -18,23 +18,23 @@ Usage
 ----------
 You can generate an image using maven or direct from java. 
 
- ### Generate an image using maven
+### Generate an image using maven
  
- To create an image joined and cropped from google maps tiles:
+To create an image joined and cropped from google maps tiles:
+
+```bash
+mvn exec:java -Dlat1=-35 -Dlon1=149 -Dlat2=-37 -Dlon2=150 -Dwidth=1200 -Dheight=800
+```
  
- ```bash
- mvn exec:java -Dlat1=-35 -Dlon1=149 -Dlat2=-37 -Dlon2=150 -Dwidth=1200 -Dheight=800
- ```
+The image will be placed in ```target/map.png```.
  
- The image will be placed in ```target/map.png```.
- 
- ### Generate an image using java
- See [ImageMakerMain.java](src/main/java/com/github/davidmoten/tj/ImageMakerMain.java).
- 
- Tile cache
- =============
- Tiled images will be cached in ```System.getProperty("java.io.tmpdir")``` and start with 
- the prefix *tile-joiner-* if you'd like to clean them out to force refresh for instance.
+### Generate an image using java
+See [ImageMakerMain.java](src/main/java/com/github/davidmoten/tj/ImageMakerMain.java).
+
+Tile cache
+=============
+Tiled images will be cached in ```System.getProperty("java.io.tmpdir")``` and start with 
+the prefix *tile-joiner-* if you'd like to clean them out to force refresh for instance.
  
  
  
