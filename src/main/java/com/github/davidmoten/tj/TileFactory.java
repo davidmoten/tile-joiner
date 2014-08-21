@@ -45,9 +45,11 @@ public class TileFactory {
 	}
 
 	private static String toUrl(Tile tile, String mapType) {
+		final int maxIndexX = (int) Math.pow(2, tile.getZoom());
 		return String.format(
 				"https://mts1.google.com/vt/lyrs=%s&x=%s&y=%s&z=%s", mapType,
-				tile.getIndex().getX(), tile.getIndex().getY(), tile.getZoom());
+				tile.getIndex().getX() % maxIndexX, tile.getIndex().getY(),
+				tile.getZoom());
 	}
 
 	static TileIndex getIndexFor(double lat, double lon, int zoom) {
