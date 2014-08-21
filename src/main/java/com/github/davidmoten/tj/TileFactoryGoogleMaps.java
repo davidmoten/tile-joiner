@@ -1,19 +1,18 @@
 package com.github.davidmoten.tj;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class TileFactoryGoogleMaps {
 
-	private static final int TILE_SIZE = 256;
+	public static final int TILE_SIZE = 256;
 
 	// https://mts1.google.com/vt/lyrs=m&x=1325&y=3143&z=13 -- normal
 	// https://mts1.google.com/vt/lyrs=y&x=1325&y=3143&z=13 -- satellite
 	// https://mts1.google.com/vt/lyrs=t&x=1325&y=3143&z=13 -- terrain
 
-	public Collection<String> getCoverage(double lat1, double lon1,
-			double lat2, double lon2, long diffX, long diffY) {
+	public List<TileUrl> getCoverage(double lat1, double lon1, double lat2,
+			double lon2, long diffX, long diffY) {
 		final double diffLat = Math.abs(lat1 - lat2);
 		final double diffLon = Math.abs(lon1 - lon2);
 		final int zoom;
@@ -48,9 +47,9 @@ public class TileFactoryGoogleMaps {
 			for (int y = minIndexY; y <= maxIndexY; y++) {
 				tiles.add(new Tile(new TileIndex(x, y), zoom));
 			}
-		final List<String> result = new ArrayList<>();
+		final List<TileUrl> result = new ArrayList<>();
 		for (final Tile tile : tiles) {
-			result.add(toUrl(tile));
+			result.add(new TileUrl(tile, toUrl(tile)));
 		}
 		return result;
 	}
