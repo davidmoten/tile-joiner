@@ -38,6 +38,7 @@ Map types
 * ```s``` = satellite
 * ```y``` = hybrid
 * ```h``` = roads overlay
+* ```t``` = terrain
 
 Tile cache
 =============
