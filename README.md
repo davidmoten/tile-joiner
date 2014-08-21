@@ -21,5 +21,10 @@ To compiles, tests and builds the artifact locally:
  
  The image will be placed in ```target/map.png```.
  
+ Tile cache
+ =============
+ Tiled images will be cached in ```System.getProperty("java.io.tmpdir")``` and start with 
+ the prefix *tile-joiner-* if you'd like to clean them out to force refresh for instance.
+ 
  
  
