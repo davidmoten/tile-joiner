@@ -3,7 +3,7 @@ package com.github.davidmoten.tj;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileFactoryGoogleMaps {
+public class TileFactory {
 
 	public static final int TILE_SIZE = 256;
 

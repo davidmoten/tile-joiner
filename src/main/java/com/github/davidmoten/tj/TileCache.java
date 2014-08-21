@@ -17,8 +17,18 @@ public class TileCache {
 
 	private final File directory;
 
+	private static final TileCache instance = new TileCache();
+
+	public TileCache instance() {
+		return instance;
+	}
+
 	public TileCache(File directory) {
 		this.directory = directory;
+	}
+
+	public TileCache() {
+		this(new File(System.getProperty("java.io.tmpdir")));
 	}
 
 	public BufferedImage getImage(String url) {
