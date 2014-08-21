@@ -17,7 +17,6 @@ public class ImageMaker {
 
 	private final double lat1;
 	private final double lon1;
-	private final double lat2;
 	private final double lon2;
 	private final int widthPixels;
 	private final int heightPixels;
@@ -25,11 +24,10 @@ public class ImageMaker {
 
 	private final String mapType;
 
-	public ImageMaker(double lat1, double lon1, double lat2, double lon2,
-			int widthPixels, int heightPixels, String mapType, TileCache cache) {
+	public ImageMaker(double lat1, double lon1, double lon2, int widthPixels,
+			int heightPixels, String mapType, TileCache cache) {
 		this.lat1 = lat1;
 		this.lon1 = lon1;
-		this.lat2 = lat2;
 		this.lon2 = lon2;
 		this.widthPixels = widthPixels;
 		this.heightPixels = heightPixels;
@@ -40,35 +38,35 @@ public class ImageMaker {
 	public void createImage(File file, String formatName) {
 		try {
 			ImageIO.write(createImage(), formatName, file);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	public BufferedImage createImage() {
-		BufferedImage image = new BufferedImage(widthPixels, heightPixels,
-				BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g = (Graphics2D) image.getGraphics();
+		final BufferedImage image = new BufferedImage(widthPixels,
+				heightPixels, BufferedImage.TYPE_INT_ARGB);
+		final Graphics2D g = (Graphics2D) image.getGraphics();
 		drawMap(g);
 		return image;
 	}
 
 	private void drawMap(Graphics2D g) {
-		List<TileUrl> tiles = new TileFactory(mapType).getCoverage(lat1, lon1,
-				lat2, lon2, widthPixels, heightPixels);
+		final List<TileUrl> tiles = new TileFactory(mapType).getCoverage(lat1,
+				lon1, lon2, widthPixels, heightPixels);
 
-		TileUrl first = tiles.get(0);
+		final TileUrl first = tiles.get(0);
 
-		int zoom = first.getTile().getZoom();
-		int deltaY = TileFactory.latToYInTile(lat1, zoom);
-		int deltaX = TileFactory.longToXInTile(lon1, zoom);
+		final int zoom = first.getTile().getZoom();
+		final int deltaY = TileFactory.latToYInTile(lat1, zoom);
+		final int deltaX = TileFactory.longToXInTile(lon1, zoom);
 
-		for (TileUrl tile : tiles) {
-			BufferedImage img = cache.getImage(tile.getUrl());
-			int x = (tile.getTile().getIndex().getX() - first.getTile()
+		for (final TileUrl tile : tiles) {
+			final BufferedImage img = cache.getImage(tile.getUrl());
+			final int x = (tile.getTile().getIndex().getX() - first.getTile()
 					.getIndex().getX())
 					* TileFactory.TILE_SIZE - deltaX;
-			int y = (tile.getTile().getIndex().getY() - first.getTile()
+			final int y = (tile.getTile().getIndex().getY() - first.getTile()
 					.getIndex().getY())
 					* TileFactory.TILE_SIZE - deltaY;
 			log.info("drawing image at {},{}", x, y);
@@ -76,10 +74,10 @@ public class ImageMaker {
 		}
 	}
 
-	public static void createImage(double lat1, double lon1, double lat2,
-			double lon2, int width, int height, String filename,
-			String imageFormat, String mapType) {
-		new ImageMaker(lat1, lon1, lat2, lon2, width, height, mapType,
+	public static void createImage(double lat1, double lon1, double lon2,
+			int width, int height, String filename, String imageFormat,
+			String mapType) {
+		new ImageMaker(lat1, lon1, lon2, width, height, mapType,
 				TileCache.instance()).createImage(new File(filename),
 				imageFormat);
 	}

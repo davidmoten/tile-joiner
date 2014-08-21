@@ -44,7 +44,6 @@
         <main.class>com.github.davidmoten.tj.ImageMakerMain</main.class>
         <lat1>-35</lat1>
         <lon1>149</lon1>
-        <lat2>-37</lat2>
         <lon2>150</lon2>
         <width>1200</width>
         <height>800</height>
@@ -260,7 +259,6 @@
                     <arguments>
                         <argument>${lat1}</argument>
                         <argument>${lon1}</argument>
-                        <argument>${lat2}</argument>
                         <argument>${lon2}</argument>
                         <argument>${width}</argument>
                         <argument>${height}</argument>

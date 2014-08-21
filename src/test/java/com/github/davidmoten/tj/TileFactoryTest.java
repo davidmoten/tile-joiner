@@ -13,8 +13,9 @@ public class TileFactoryTest {
 	@Test
 	public void test() {
 		final TileFactory g = new TileFactory("m");
-		Collection<TileUrl> tiles = g.getCoverage(-35, 149, -37, 150, 800, 600);
-		Collection<String> urls = new HashSet<>();
+		final Collection<TileUrl> tiles = g
+				.getCoverage(-35, 149, 150, 800, 600);
+		final Collection<String> urls = new HashSet<>();
 		for (final TileUrl tile : tiles) {
 			System.out.println(tile.getUrl());
 			urls.add(tile.getUrl());
@@ -23,7 +24,7 @@ public class TileFactoryTest {
 		assertTrue(urls
 				.contains("https://mts1.google.com/vt/lyrs=m&x=1871&y=1236&z=11"));
 		assertTrue(urls
-				.contains("https://mts1.google.com/vt/lyrs=m&x=1877&y=1250&z=11"));
+				.contains("https://mts1.google.com/vt/lyrs=m&x=1877&y=1239&z=11"));
 	}
 
 	@Test
