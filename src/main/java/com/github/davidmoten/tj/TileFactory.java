@@ -6,6 +6,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Preconditions;
+
 public class TileFactory {
 
 	private static final Logger log = LoggerFactory
@@ -33,6 +35,7 @@ public class TileFactory {
 
 		public Coverage(List<TileUrl> tiles, int deltaX, int deltaY,
 				int scaledTileSize) {
+			Preconditions.checkArgument(!tiles.isEmpty(), "tiles is empty!");
 			this.tiles = tiles;
 			this.deltaX = deltaX;
 			this.deltaY = deltaY;
@@ -44,7 +47,7 @@ public class TileFactory {
 
 		private static int getMaxIndexX(List<TileUrl> tiles) {
 			Integer max = null;
-			for (TileUrl tile : tiles) {
+			for (final TileUrl tile : tiles) {
 				if (max == null || max < tile.getTile().getIndex().getX())
 					max = tile.getTile().getIndex().getX();
 			}
@@ -53,7 +56,7 @@ public class TileFactory {
 
 		private static int getMinIndexX(List<TileUrl> tiles) {
 			Integer min = null;
-			for (TileUrl tile : tiles) {
+			for (final TileUrl tile : tiles) {
 				if (min == null || min > tile.getTile().getIndex().getX())
 					min = tile.getTile().getIndex().getX();
 			}
@@ -62,7 +65,7 @@ public class TileFactory {
 
 		private static int getMinIndexY(List<TileUrl> tiles) {
 			Integer min = null;
-			for (TileUrl tile : tiles) {
+			for (final TileUrl tile : tiles) {
 				if (min == null || min > tile.getTile().getIndex().getY())
 					min = tile.getTile().getIndex().getY();
 			}
@@ -117,7 +120,7 @@ public class TileFactory {
 		final int deltaX2 = TileFactory.lonToXInTile(rightLon, zoom);
 
 		final int tilesAcross = maxIndexX - minIndexX + 1;
-		int scaledTileSize = (int) Math
+		final int scaledTileSize = (int) Math
 				.round((width)
 						/ (tilesAcross - 1 - (double) deltaX / TILE_SIZE + (double) deltaX2
 								/ TILE_SIZE));
@@ -133,12 +136,12 @@ public class TileFactory {
 			for (int y = minIndexY; y <= maxIndexY; y++) {
 				tiles.add(new Tile(new TileIndex(x, y), zoom));
 			}
-		final List<TileUrl> result = new ArrayList<>();
+		final List<TileUrl> tileUrls = new ArrayList<>();
 		for (final Tile tile : tiles) {
-			result.add(new TileUrl(tile, toUrl(tile, mapType)));
+			tileUrls.add(new TileUrl(tile, toUrl(tile, mapType)));
 		}
 
-		return new Coverage(result, deltaX, deltaY, scaledTileSize);
+		return new Coverage(tileUrls, deltaX, deltaY, scaledTileSize);
 	}
 
 	private static int calculateZoom(int width, final double diffLon) {
