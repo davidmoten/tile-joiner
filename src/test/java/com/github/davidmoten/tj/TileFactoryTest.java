@@ -14,7 +14,7 @@ public class TileFactoryTest {
 	public void test() {
 		final TileFactory g = new TileFactory("m");
 		final Collection<TileUrl> tiles = g
-				.getCoverage(-35, 149, 150, 800, 600);
+				.getCoverage(-35, 149, 150, 800, 600).getTiles();
 		final Collection<String> urls = new HashSet<>();
 		for (final TileUrl tile : tiles) {
 			System.out.println(tile.getUrl());

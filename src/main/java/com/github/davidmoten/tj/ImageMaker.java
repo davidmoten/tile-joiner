@@ -1,15 +1,19 @@
 package com.github.davidmoten.tj;
 
+import static com.github.davidmoten.tj.TileFactory.TILE_SIZE;
+
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.github.davidmoten.tj.TileFactory.Coverage;
 
 public class ImageMaker {
 
@@ -52,25 +56,27 @@ public class ImageMaker {
 	}
 
 	private void drawMap(Graphics2D g) {
-		final List<TileUrl> tiles = new TileFactory(mapType).getCoverage(lat1,
+		final Coverage coverage = new TileFactory(mapType).getCoverage(lat1,
 				lon1, lon2, widthPixels, heightPixels);
 
-		final TileUrl first = tiles.get(0);
+		final int deltaY = coverage.getDeltaY();
+		final int deltaX = coverage.getDeltaX();
+		int scaledTileSize = coverage.getScaledTileSize();
 
-		final int zoom = first.getTile().getZoom();
-		final int deltaY = TileFactory.latToYInTile(lat1, zoom);
-		final int deltaX = TileFactory.longToXInTile(lon1, zoom);
-
-		for (final TileUrl tile : tiles) {
+		for (final TileUrl tile : coverage.getTiles()) {
 			final BufferedImage img = cache.getImage(tile.getUrl());
-			final int x = (tile.getTile().getIndex().getX() - first.getTile()
-					.getIndex().getX())
-					* TileFactory.TILE_SIZE - deltaX;
-			final int y = (tile.getTile().getIndex().getY() - first.getTile()
-					.getIndex().getY())
-					* TileFactory.TILE_SIZE - deltaY;
+			int scaledDeltaX = (int) Math.round((double) deltaX / TILE_SIZE
+					* scaledTileSize);
+			int scaledDeltaY = (int) Math.round((double) deltaY / TILE_SIZE
+					* scaledTileSize);
+			final int x = (tile.getTile().getIndex().getX() - coverage
+					.getMinIndexX()) * scaledTileSize - scaledDeltaX;
+			final int y = (tile.getTile().getIndex().getY() - coverage
+					.getMinIndexY()) * scaledTileSize - scaledDeltaY;
 			log.info("drawing image at {},{}", x, y);
-			g.drawImage(img, x, y, null);
+			g.drawImage(img, x, y, scaledTileSize, scaledTileSize, null);
+			g.setColor(Color.black);
+			g.drawRect(x, y, scaledTileSize, scaledTileSize);
 		}
 	}
 
