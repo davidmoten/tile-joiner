@@ -99,22 +99,22 @@ public class TileFactory {
 
 	}
 
-	public Coverage getCoverage(double lat1, double lon1, double lon2,
+	public Coverage getCoverage(double topLat, double leftLon, double rightLon,
 			int width, int height) {
-		final double diffLon = Math.abs(lon1 - lon2);
+		final double diffLon = Math.abs(leftLon - rightLon);
 
 		final int zoom = calculateZoom(width, diffLon);
 
-		final TileIndex index1 = getIndexFor(lat1, lon1, zoom);
-		final int xIndex2 = lonToTileIndexX(lon2, zoom);
+		final TileIndex index1 = getIndexFor(topLat, leftLon, zoom);
+		final int xIndex2 = lonToTileIndexX(rightLon, zoom);
 
 		final int minIndexX = index1.getX();
 		final int minIndexY = index1.getY();
 		final int maxIndexX = xIndex2;
 
-		final int deltaY = TileFactory.latToYInTile(lat1, zoom);
-		final int deltaX = TileFactory.lonToXInTile(lon1, zoom);
-		final int deltaX2 = TileFactory.lonToXInTile(lon2, zoom);
+		final int deltaY = TileFactory.latToYInTile(topLat, zoom);
+		final int deltaX = TileFactory.lonToXInTile(leftLon, zoom);
+		final int deltaX2 = TileFactory.lonToXInTile(rightLon, zoom);
 
 		final int tilesAcross = maxIndexX - minIndexX + 1;
 		int scaledTileSize = (int) Math
