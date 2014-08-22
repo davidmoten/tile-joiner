@@ -3,7 +3,13 @@ package com.github.davidmoten.tj;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class TileFactory {
+
+	private static final Logger log = LoggerFactory
+			.getLogger(TileFactory.class);
 
 	public static final int TILE_SIZE = 256;
 	private final String mapType;
@@ -109,11 +115,12 @@ public class TileFactory {
 		final int deltaY = TileFactory.latToYInTile(lat1, zoom);
 		final int deltaX = TileFactory.lonToXInTile(lon1, zoom);
 		final int deltaX2 = TileFactory.lonToXInTile(lon2, zoom);
+		log.info("deltaX=" + deltaX + ",deltaX2=" + deltaX2);
 		final int tilesAcross = maxIndexX - minIndexX + 1;
 		int scaledTileSize = (int) Math.round((width)
 				/ (tilesAcross - (double) deltaX / TILE_SIZE + (double) deltaX2
 						/ TILE_SIZE));
-		scaledTileSize = scaledTileSize * 11 / 10;
+		// scaledTileSize = scaledTileSize * 11 / 10;
 
 		final int maxIndexY = minIndexY + height / scaledTileSize + 1;
 

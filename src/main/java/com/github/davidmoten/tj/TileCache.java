@@ -56,7 +56,8 @@ public class TileCache {
 				file.delete();
 				throw new RuntimeException(e);
 			}
-		}
+		} else
+			log.info("url in cache already: " + url);
 		try {
 			return ImageIO.read(file);
 		} catch (IOException e) {
