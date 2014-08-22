@@ -115,12 +115,15 @@ public class TileFactory {
 		final int deltaY = TileFactory.latToYInTile(lat1, zoom);
 		final int deltaX = TileFactory.lonToXInTile(lon1, zoom);
 		final int deltaX2 = TileFactory.lonToXInTile(lon2, zoom);
-		log.info("deltaX=" + deltaX + ",deltaX2=" + deltaX2);
-		log.info("minIndexX=" + minIndexX + ", maxIndexX=" + maxIndexX);
+
 		final int tilesAcross = maxIndexX - minIndexX + 1;
-		int scaledTileSize = (int) Math.round((width)
-				/ (tilesAcross - (double) deltaX / TILE_SIZE + (double) deltaX2
-						/ TILE_SIZE));
+		int scaledTileSize = (int) Math
+				.round((width)
+						/ (tilesAcross - 1 - (double) deltaX / TILE_SIZE + (double) deltaX2
+								/ TILE_SIZE));
+		log.info("deltaX=" + deltaX + ",deltaX2=" + deltaX2 + ","
+				+ "minIndexX=" + minIndexX + ", maxIndexX=" + maxIndexX
+				+ ",scaledTileSize=" + scaledTileSize);
 		// scaledTileSize = scaledTileSize * 11 / 10;
 
 		final int maxIndexY = minIndexY + height / scaledTileSize + 1;

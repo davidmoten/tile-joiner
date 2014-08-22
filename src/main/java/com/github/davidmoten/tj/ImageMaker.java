@@ -62,6 +62,7 @@ public class ImageMaker {
 		final int deltaY = coverage.getDeltaY();
 		final int deltaX = coverage.getDeltaX();
 		int scaledTileSize = coverage.getScaledTileSize();
+		double scale = (double) scaledTileSize / TILE_SIZE;
 
 		for (final TileUrl tile : coverage.getTiles()) {
 			final BufferedImage img = cache.getImage(tile.getUrl());
@@ -75,6 +76,15 @@ public class ImageMaker {
 					.getMinIndexY()) * scaledTileSize - scaledDeltaY;
 			log.info("drawing image at {},{}", x, y);
 			g.drawImage(img, x, y, scaledTileSize, scaledTileSize, null);
+
+			// AffineTransform transform =
+			// AffineTransform.getScaleInstance(scale,
+			// scale);
+			// g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+			// RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+			// g.drawImage(img, transform, null);
+
+			// outline
 			g.setColor(Color.black);
 			g.drawRect(x, y, scaledTileSize, scaledTileSize);
 		}
