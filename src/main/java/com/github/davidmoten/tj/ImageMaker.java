@@ -77,16 +77,9 @@ public class ImageMaker {
 			log.info("drawing image at {},{}", x, y);
 			g.drawImage(img, x, y, scaledTileSize, scaledTileSize, null);
 
-			// AffineTransform transform =
-			// AffineTransform.getScaleInstance(scale,
-			// scale);
-			// g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-			// RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-			// g.drawImage(img, transform, null);
-
 			// outline
 			g.setColor(Color.black);
-			g.drawRect(x, y, scaledTileSize, scaledTileSize);
+			// g.drawRect(x, y, scaledTileSize, scaledTileSize);
 		}
 	}
 
