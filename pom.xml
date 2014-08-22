@@ -42,14 +42,14 @@
         <coverage.reports.dir>${project.build.directory}/target/coverage-reports</coverage.reports.dir>
         
         <main.class>com.github.davidmoten.tj.ImageMakerMain</main.class>
-        <lat1>-35</lat1>
-        <lon1>149</lon1>
-        <lon2>150</lon2>
-        <width>1200</width>
-        <height>800</height>
+        <lat1>16</lat1>
+        <lon1>67</lon1>
+        <lon2>179</lon2>
+        <width>800</width>
+        <height>500</height>
         <output.file>${project.build.directory}/map.png</output.file>
         <image.format>PNG</image.format>
-        <map.type>m</map.type>
+        <map.type>s</map.type>
     </properties>
 
     <licenses>
