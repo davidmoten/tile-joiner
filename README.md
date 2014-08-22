@@ -1,7 +1,8 @@
 tile-joiner
 ===========
 
-Renders Google Maps tiles to a ```BufferedImage``` in java and thence to a PNG for instance.
+Renders Google Maps tiles to a [BufferedImage](http://docs.oracle.com/javase/7/docs/api/java/awt/image/BufferedImage.html) 
+in java and thence to a PNG for instance.
 
 Status: *pre-alpha*
 
