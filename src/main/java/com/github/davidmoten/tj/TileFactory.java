@@ -116,6 +116,7 @@ public class TileFactory {
 		final int deltaX = TileFactory.lonToXInTile(lon1, zoom);
 		final int deltaX2 = TileFactory.lonToXInTile(lon2, zoom);
 		log.info("deltaX=" + deltaX + ",deltaX2=" + deltaX2);
+		log.info("minIndexX=" + minIndexX + ", maxIndexX=" + maxIndexX);
 		final int tilesAcross = maxIndexX - minIndexX + 1;
 		int scaledTileSize = (int) Math.round((width)
 				/ (tilesAcross - (double) deltaX / TILE_SIZE + (double) deltaX2
