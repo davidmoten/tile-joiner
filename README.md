@@ -5,6 +5,8 @@ Renders a Google Maps tiles to a BufferedImage in java and thence to a PNG for i
 
 Status: *pre-alpha*
 
+<img src="https://raw.githubusercontent.com/davidmoten/tile-joiner/master/src/docs/map.png"/>
+
 How to build
 -------------
 To compiles, tests and builds the artifact locally:
@@ -28,8 +30,6 @@ mvn exec:java -Dlat1=16 -Dlon1=67 -Dlon2=179 -Dwidth=800 -Dheight=500 \
 ```
 
 The image wil be a Google Maps Satellite map and is created in ```target/map.png``` by default.
-
-<img src="https://raw.githubusercontent.com/davidmoten/tile-joiner/master/src/docs/map.png"/>
 
 The parameters above are also the defaults. The same result will be produced by 
 
