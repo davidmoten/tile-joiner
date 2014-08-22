@@ -19,20 +19,20 @@ public class ImageMaker {
 
 	private static final Logger log = LoggerFactory.getLogger(ImageMaker.class);
 
-	private final double lat1;
-	private final double lon1;
-	private final double lon2;
+	private final double topLat;
+	private final double leftLon;
+	private final double rightLon;
 	private final int widthPixels;
 	private final int heightPixels;
 	private final TileCache cache;
 
 	private final String mapType;
 
-	public ImageMaker(double lat1, double lon1, double lon2, int widthPixels,
+	public ImageMaker(double topLat, double leftLon, double rightLon, int widthPixels,
 			int heightPixels, String mapType, TileCache cache) {
-		this.lat1 = lat1;
-		this.lon1 = lon1;
-		this.lon2 = lon2;
+		this.topLat = topLat;
+		this.leftLon = leftLon;
+		this.rightLon = rightLon;
 		this.widthPixels = widthPixels;
 		this.heightPixels = heightPixels;
 		this.mapType = mapType;
@@ -56,8 +56,8 @@ public class ImageMaker {
 	}
 
 	private void drawMap(Graphics2D g) {
-		final Coverage coverage = new TileFactory(mapType).getCoverage(lat1,
-				lon1, lon2, widthPixels, heightPixels);
+		final Coverage coverage = new TileFactory(mapType).getCoverage(topLat,
+				leftLon, rightLon, widthPixels, heightPixels);
 
 		final int deltaY = coverage.getDeltaY();
 		final int deltaX = coverage.getDeltaX();
@@ -83,10 +83,10 @@ public class ImageMaker {
 		}
 	}
 
-	public static void createImage(double lat1, double lon1, double lon2,
+	public static void createImage(double topLat, double leftLon, double rightLon,
 			int width, int height, String filename, String imageFormat,
 			String mapType) {
-		new ImageMaker(lat1, lon1, lon2, width, height, mapType,
+		new ImageMaker(topLat, leftLon, rightLon, width, height, mapType,
 				TileCache.instance()).createImage(new File(filename),
 				imageFormat);
 	}

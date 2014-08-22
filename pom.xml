@@ -42,9 +42,9 @@
         <coverage.reports.dir>${project.build.directory}/target/coverage-reports</coverage.reports.dir>
         
         <main.class>com.github.davidmoten.tj.ImageMakerMain</main.class>
-        <lat1>16</lat1>
-        <lon1>67</lon1>
-        <lon2>179</lon2>
+        <topLat>16</topLat>
+        <leftLon>67</leftLon>
+        <rightLon>179</rightLon>
         <width>800</width>
         <height>500</height>
         <output.file>${project.build.directory}/map.png</output.file>
@@ -257,9 +257,9 @@
                     <mainClass>${main.class}</mainClass>
                     <classpathScope>test</classpathScope>
                     <arguments>
-                        <argument>${lat1}</argument>
-                        <argument>${lon1}</argument>
-                        <argument>${lon2}</argument>
+                        <argument>${topLat}</argument>
+                        <argument>${leftLon}</argument>
+                        <argument>${rightLon}</argument>
                         <argument>${width}</argument>
                         <argument>${height}</argument>
                         <argument>${output.file}</argument>
