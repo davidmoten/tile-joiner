@@ -1,6 +1,6 @@
 package com.github.davidmoten.tj;
 
-public class ImageMakerMain {
+public class ImageCreatorMain {
 
 	public static void main(String[] args) {
 		System.setProperty("https.proxyHost", "proxy.amsa.gov.au");
@@ -15,8 +15,9 @@ public class ImageMakerMain {
 		final String imageFormat = args[6];
 		final String mapType = args[7];
 
-		ImageMaker.createImage(topLat, leftLon, rightLon, width, height, filename,
-				imageFormat, mapType);
+		ImageCreator.builder().topLat(topLat).leftLon(leftLon)
+				.rightLon(rightLon).width(width).height(height)
+				.outputFile(filename).imageFormat(imageFormat).mapType(mapType)
+				.create();
 	}
-
 }

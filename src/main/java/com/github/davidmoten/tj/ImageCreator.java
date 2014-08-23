@@ -13,28 +13,101 @@ import javax.imageio.ImageIO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ImageMaker {
+public class ImageCreator {
 
-	private static final Logger log = LoggerFactory.getLogger(ImageMaker.class);
+	private static final Logger log = LoggerFactory.getLogger(ImageCreator.class);
 
 	private final double topLat;
 	private final double leftLon;
 	private final double rightLon;
-	private final int widthPixels;
-	private final int heightPixels;
+	private final int width;
+	private final int height;
+	private final String mapType;
 	private final TileCache cache;
 
-	private final String mapType;
-
-	public ImageMaker(double topLat, double leftLon, double rightLon,
+	public ImageCreator(double topLat, double leftLon, double rightLon,
 			int widthPixels, int heightPixels, String mapType, TileCache cache) {
 		this.topLat = topLat;
 		this.leftLon = leftLon;
 		this.rightLon = rightLon;
-		this.widthPixels = widthPixels;
-		this.heightPixels = heightPixels;
+		this.width = widthPixels;
+		this.height = heightPixels;
 		this.mapType = mapType;
 		this.cache = cache;
+	}
+
+	public static Builder builder() {
+		return new Builder();
+	}
+
+	public static class Builder {
+
+		private double topLat;
+		private double leftLon;
+		private double rightLon;
+		private int width;
+		private int height;
+		private String mapType;
+		private TileCache cache = TileCache.instance();
+		private File outputFile = new File("target/map.png");
+		private String imageFormat = "PNG";
+
+		private Builder() {
+		}
+
+		public Builder topLat(double topLat) {
+			this.topLat = topLat;
+			return this;
+		}
+
+		public Builder leftLon(double leftLon) {
+			this.leftLon = leftLon;
+			return this;
+		}
+
+		public Builder rightLon(double rightLon) {
+			this.rightLon = rightLon;
+			return this;
+		}
+
+		public Builder width(int width) {
+			this.width = width;
+			return this;
+		}
+
+		public Builder height(int height) {
+			this.height = height;
+			return this;
+		}
+
+		public Builder mapType(String mapType) {
+			this.mapType = mapType;
+			return this;
+		}
+
+		public Builder cache(TileCache cache) {
+			this.cache = cache;
+			return this;
+		}
+
+		public Builder outputFile(File file) {
+			this.outputFile = file;
+			return this;
+		}
+
+		public Builder outputFile(String filename) {
+			return outputFile(new File(filename));
+		}
+
+		public Builder imageFormat(String imageFormat) {
+			this.imageFormat = imageFormat;
+			return this;
+		}
+
+		public void create() {
+			new ImageCreator(topLat, leftLon, rightLon, width, height, mapType,
+					cache).createImage(outputFile, imageFormat);
+		}
 	}
 
 	public void createImage(File file, String formatName) {
@@ -46,8 +119,8 @@ public class ImageMaker {
 	}
 
 	public BufferedImage createImage() {
-		final BufferedImage image = new BufferedImage(widthPixels,
-				heightPixels, BufferedImage.TYPE_INT_ARGB);
+		final BufferedImage image = new BufferedImage(width, height,
+				BufferedImage.TYPE_INT_ARGB);
 		final Graphics2D g = (Graphics2D) image.getGraphics();
 		drawMap(g);
 		return image;
@@ -55,7 +128,7 @@ public class ImageMaker {
 
 	private void drawMap(Graphics2D g) {
 		final Coverage coverage = new TileFactory(mapType).getCoverage(topLat,
-				leftLon, rightLon, widthPixels, heightPixels);
+				leftLon, rightLon, width, height);
 
 		final int deltaY = coverage.getDeltaY();
 		final int deltaX = coverage.getDeltaX();
@@ -85,7 +158,7 @@ public class ImageMaker {
 	public static void createImage(double topLat, double leftLon,
 			double rightLon, int width, int height, String filename,
 			String imageFormat, String mapType) {
-		new ImageMaker(topLat, leftLon, rightLon, width, height, mapType,
+		new ImageCreator(topLat, leftLon, rightLon, width, height, mapType,
 				TileCache.instance()).createImage(new File(filename),
 				imageFormat);
 	}
