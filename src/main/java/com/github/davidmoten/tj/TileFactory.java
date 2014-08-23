@@ -140,7 +140,6 @@ public class TileFactory {
 		log.info("deltaX=" + deltaX + ",deltaX2=" + deltaX2 + ","
 				+ "minIndexX=" + leftIndexX + ", maxIndexX=" + rightIndexX
 				+ ",scaledTileSize=" + scaledTileSize);
-		// scaledTileSize = scaledTileSize * 11 / 10;
 
 		final int maxIndexY = topIndexY + height / scaledTileSize + 1;
 
