@@ -13,8 +13,6 @@ import javax.imageio.ImageIO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.davidmoten.tj.TileFactory.Coverage;
-
 public class ImageMaker {
 
 	private static final Logger log = LoggerFactory.getLogger(ImageMaker.class);

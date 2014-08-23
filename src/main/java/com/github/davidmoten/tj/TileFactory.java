@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Optional;
-import com.google.common.base.Preconditions;
 
 public class TileFactory {
 
@@ -24,84 +23,6 @@ public class TileFactory {
 	// https://mts1.google.com/vt/lyrs=m&x=1325&y=3143&z=13 -- normal
 	// https://mts1.google.com/vt/lyrs=y&x=1325&y=3143&z=13 -- satellite
 	// https://mts1.google.com/vt/lyrs=t&x=1325&y=3143&z=13 -- terrain
-
-	public static class Coverage {
-		private final List<TileUrl> tiles;
-		private final int minIndexX;
-		private final int maxIndexX;
-		private final int minIndexY;
-		private final int deltaX;
-		private final int deltaY;
-		private final int scaledTileSize;
-
-		public Coverage(List<TileUrl> tiles, int deltaX, int deltaY,
-				int scaledTileSize) {
-			Preconditions.checkArgument(!tiles.isEmpty(), "tiles is empty!");
-			this.tiles = tiles;
-			this.deltaX = deltaX;
-			this.deltaY = deltaY;
-			this.scaledTileSize = scaledTileSize;
-			this.minIndexX = getMinIndexX(tiles);
-			this.maxIndexX = getMaxIndexX(tiles);
-			this.minIndexY = getMinIndexY(tiles);
-		}
-
-		private static int getMaxIndexX(List<TileUrl> tiles) {
-			Integer max = null;
-			for (final TileUrl tile : tiles) {
-				if (max == null || max < tile.getTile().getIndex().getX())
-					max = tile.getTile().getIndex().getX();
-			}
-			return max;
-		}
-
-		private static int getMinIndexX(List<TileUrl> tiles) {
-			Integer min = null;
-			for (final TileUrl tile : tiles) {
-				if (min == null || min > tile.getTile().getIndex().getX())
-					min = tile.getTile().getIndex().getX();
-			}
-			return min;
-		}
-
-		private static int getMinIndexY(List<TileUrl> tiles) {
-			Integer min = null;
-			for (final TileUrl tile : tiles) {
-				if (min == null || min > tile.getTile().getIndex().getY())
-					min = tile.getTile().getIndex().getY();
-			}
-			return min;
-		}
-
-		public List<TileUrl> getTiles() {
-			return tiles;
-		}
-
-		public int getMinIndexX() {
-			return minIndexX;
-		}
-
-		public int getMaxIndexX() {
-			return maxIndexX;
-		}
-
-		public int getMinIndexY() {
-			return minIndexY;
-		}
-
-		public int getDeltaX() {
-			return deltaX;
-		}
-
-		public int getDeltaY() {
-			return deltaY;
-		}
-
-		public int getScaledTileSize() {
-			return scaledTileSize;
-		}
-
-	}
 
 	public Coverage getCoverage(double topLat, double leftLon, double rightLon,
 			int width, int height) {

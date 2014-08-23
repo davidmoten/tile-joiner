@@ -8,6 +8,12 @@ Status: *pre-alpha*
 
 <img src="https://raw.githubusercontent.com/davidmoten/tile-joiner/master/src/docs/map.png"/>
 
+Features
+---------------
+* Calculates optimal zoom level
+* Handles 180/-180 longitude boundary
+* Caches tiles to the local file system
+
 How to build
 -------------
 To compiles, tests and builds the artifact locally:
