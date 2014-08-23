@@ -18,7 +18,7 @@ public class TileFactoryTest {
 		final Collection<String> urls = new HashSet<>();
 		for (final TileUrl tile : tiles) {
 			System.out.println(tile.getUrl());
-			urls.add(tile.getUrl());
+			urls.add(tile.getUrl().get());
 		}
 
 		assertTrue(urls

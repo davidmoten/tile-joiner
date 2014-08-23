@@ -28,8 +28,8 @@ public class ImageMaker {
 
 	private final String mapType;
 
-	public ImageMaker(double topLat, double leftLon, double rightLon, int widthPixels,
-			int heightPixels, String mapType, TileCache cache) {
+	public ImageMaker(double topLat, double leftLon, double rightLon,
+			int widthPixels, int heightPixels, String mapType, TileCache cache) {
 		this.topLat = topLat;
 		this.leftLon = leftLon;
 		this.rightLon = rightLon;
@@ -61,31 +61,33 @@ public class ImageMaker {
 
 		final int deltaY = coverage.getDeltaY();
 		final int deltaX = coverage.getDeltaX();
-		int scaledTileSize = coverage.getScaledTileSize();
-		double scale = (double) scaledTileSize / TILE_SIZE;
+		final int scaledTileSize = coverage.getScaledTileSize();
+		final double scale = (double) scaledTileSize / TILE_SIZE;
 
 		for (final TileUrl tile : coverage.getTiles()) {
-			final BufferedImage img = cache.getImage(tile.getUrl());
-			int scaledDeltaX = (int) Math.round((double) deltaX / TILE_SIZE
-					* scaledTileSize);
-			int scaledDeltaY = (int) Math.round((double) deltaY / TILE_SIZE
-					* scaledTileSize);
-			final int x = (tile.getTile().getIndex().getX() - coverage
-					.getMinIndexX()) * scaledTileSize - scaledDeltaX;
-			final int y = (tile.getTile().getIndex().getY() - coverage
-					.getMinIndexY()) * scaledTileSize - scaledDeltaY;
-			log.info("drawing image at {},{}", x, y);
-			g.drawImage(img, x, y, scaledTileSize, scaledTileSize, null);
+			if (tile.getUrl().isPresent()) {
+				final BufferedImage img = cache.getImage(tile.getUrl().get());
+				final int scaledDeltaX = (int) Math.round((double) deltaX
+						/ TILE_SIZE * scaledTileSize);
+				final int scaledDeltaY = (int) Math.round((double) deltaY
+						/ TILE_SIZE * scaledTileSize);
+				final int x = (tile.getTile().getIndex().getX() - coverage
+						.getMinIndexX()) * scaledTileSize - scaledDeltaX;
+				final int y = (tile.getTile().getIndex().getY() - coverage
+						.getMinIndexY()) * scaledTileSize - scaledDeltaY;
+				log.info("drawing image at {},{}", x, y);
+				g.drawImage(img, x, y, scaledTileSize, scaledTileSize, null);
 
-			// outline
-			g.setColor(Color.black);
-			// g.drawRect(x, y, scaledTileSize, scaledTileSize);
+				// outline
+				g.setColor(Color.black);
+				// g.drawRect(x, y, scaledTileSize, scaledTileSize);
+			}
 		}
 	}
 
-	public static void createImage(double topLat, double leftLon, double rightLon,
-			int width, int height, String filename, String imageFormat,
-			String mapType) {
+	public static void createImage(double topLat, double leftLon,
+			double rightLon, int width, int height, String filename,
+			String imageFormat, String mapType) {
 		new ImageMaker(topLat, leftLon, rightLon, width, height, mapType,
 				TileCache.instance()).createImage(new File(filename),
 				imageFormat);

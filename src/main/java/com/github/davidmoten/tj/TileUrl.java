@@ -1,11 +1,13 @@
 package com.github.davidmoten.tj;
 
+import com.google.common.base.Optional;
+
 public class TileUrl {
 
 	private final Tile tile;
-	private final String url;
+	private final Optional<String> url;
 
-	public TileUrl(Tile tile, String url) {
+	public TileUrl(Tile tile, Optional<String> url) {
 		this.tile = tile;
 		this.url = url;
 	}
@@ -14,7 +16,7 @@ public class TileUrl {
 		return tile;
 	}
 
-	public String getUrl() {
+	public Optional<String> getUrl() {
 		return url;
 	}
 

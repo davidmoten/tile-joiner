@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 
 public class TileFactory {
@@ -104,38 +105,51 @@ public class TileFactory {
 
 	public Coverage getCoverage(double topLat, double leftLon, double rightLon,
 			int width, int height) {
-		final double diffLon = Math.abs(leftLon - rightLon);
+
+		final double diffLon;
+		if (rightLon >= leftLon)
+			diffLon = Math.abs(rightLon - leftLon);
+		else
+			diffLon = Math.abs(rightLon - leftLon + 360);
 
 		final int zoom = calculateZoom(width, diffLon);
 
 		final TileIndex index1 = getIndexFor(topLat, leftLon, zoom);
 		final int xIndex2 = lonToTileIndexX(rightLon, zoom);
 
-		final int minIndexX = index1.getX();
-		final int minIndexY = index1.getY();
-		final int maxIndexX = xIndex2;
+		final int leftIndexX = index1.getX();
+		final int topIndexY = index1.getY();
+		final int rightIndexX = xIndex2;
 
 		final int deltaY = TileFactory.latToYInTile(topLat, zoom);
 		final int deltaX = TileFactory.lonToXInTile(leftLon, zoom);
 		final int deltaX2 = TileFactory.lonToXInTile(rightLon, zoom);
 
-		final int tilesAcross = maxIndexX - minIndexX + 1;
+		final int virtualRightIndexX;
+		if (leftIndexX <= rightIndexX)
+			virtualRightIndexX = rightIndexX;
+		else
+			virtualRightIndexX = rightIndexX + pow2(zoom);
+
+		final int tilesAcross = virtualRightIndexX - leftIndexX + 1;
+
 		final int scaledTileSize = (int) Math
 				.round((width)
 						/ (tilesAcross - 1 - (double) deltaX / TILE_SIZE + (double) deltaX2
 								/ TILE_SIZE));
 		log.info("deltaX=" + deltaX + ",deltaX2=" + deltaX2 + ","
-				+ "minIndexX=" + minIndexX + ", maxIndexX=" + maxIndexX
+				+ "minIndexX=" + leftIndexX + ", maxIndexX=" + rightIndexX
 				+ ",scaledTileSize=" + scaledTileSize);
 		// scaledTileSize = scaledTileSize * 11 / 10;
 
-		final int maxIndexY = minIndexY + height / scaledTileSize + 1;
+		final int maxIndexY = topIndexY + height / scaledTileSize + 1;
 
 		final List<Tile> tiles = new ArrayList<>();
-		for (int x = minIndexX; x <= maxIndexX; x++)
-			for (int y = minIndexY; y <= maxIndexY; y++) {
+		for (int x = leftIndexX; x <= virtualRightIndexX; x++)
+			for (int y = topIndexY; y <= maxIndexY; y++) {
 				tiles.add(new Tile(new TileIndex(x, y), zoom));
 			}
+
 		final List<TileUrl> tileUrls = new ArrayList<>();
 		for (final Tile tile : tiles) {
 			tileUrls.add(new TileUrl(tile, toUrl(tile, mapType)));
@@ -144,18 +158,24 @@ public class TileFactory {
 		return new Coverage(tileUrls, deltaX, deltaY, scaledTileSize);
 	}
 
+	private static int pow2(int zoom) {
+		return (int) Math.round(Math.pow(2, zoom));
+	}
+
 	private static int calculateZoom(int width, final double diffLon) {
 		return (int) (Math.round(Math.floor(Math.log(360.0 * width / diffLon
 				/ TILE_SIZE)
 				/ Math.log(2))) + 1);
 	}
 
-	private static String toUrl(Tile tile, String mapType) {
-		final int maxIndexX = (int) Math.pow(2, tile.getZoom());
-		return String.format(
-				"https://mts1.google.com/vt/lyrs=%s&x=%s&y=%s&z=%s", mapType,
-				tile.getIndex().getX() % maxIndexX, tile.getIndex().getY(),
-				tile.getZoom());
+	private static Optional<String> toUrl(Tile tile, String mapType) {
+		if (tile.getIndex().getY() >= pow2(tile.getZoom()))
+			return Optional.absent();
+		else
+			return Optional.of(String.format(
+					"https://mts1.google.com/vt/lyrs=%s&x=%s&y=%s&z=%s",
+					mapType, tile.getIndex().getX() % pow2(tile.getZoom()),
+					tile.getIndex().getY(), tile.getZoom()));
 	}
 
 	static TileIndex getIndexFor(double lat, double lon, int zoom) {
