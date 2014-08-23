@@ -15,7 +15,8 @@ import org.slf4j.LoggerFactory;
 
 public class ImageCreator {
 
-	private static final Logger log = LoggerFactory.getLogger(ImageCreator.class);
+	private static final Logger log = LoggerFactory
+			.getLogger(ImageCreator.class);
 
 	private final double topLat;
 	private final double leftLon;
@@ -83,6 +84,10 @@ public class ImageCreator {
 		public Builder mapType(String mapType) {
 			this.mapType = mapType;
 			return this;
+		}
+
+		public Builder mapType(MapType mapType) {
+			return mapType(mapType.getCode());
 		}
 
 		public Builder cache(TileCache cache) {
