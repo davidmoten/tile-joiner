@@ -60,7 +60,6 @@ public class ImageMaker {
 		final int deltaY = coverage.getDeltaY();
 		final int deltaX = coverage.getDeltaX();
 		final int scaledTileSize = coverage.getScaledTileSize();
-		final double scale = (double) scaledTileSize / TILE_SIZE;
 
 		for (final TileUrl tile : coverage.getTiles()) {
 			if (tile.getUrl().isPresent()) {
