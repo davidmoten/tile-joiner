@@ -45,7 +45,7 @@ mvn exec:java
 ```
  
 ### Generate an image using java
-See [ImageMakerMain.java](src/main/java/com/github/davidmoten/tj/ImageMakerMain.java).
+See [ImageCreatorMain.java](src/main/java/com/github/davidmoten/tj/ImageCreatorMain.java).
 
 Map types
 -----------
