@@ -74,6 +74,12 @@ ImageCreator.builder()
 
 See also [ImageCreatorMain.java](src/main/java/com/github/davidmoten/tj/ImageCreatorMain.java).
 
+### Generate an image using jar
+TODO
+
+* Download the jar from [here](TODO).
+
+
 Map services
 ---------------
 * GOOGLE
