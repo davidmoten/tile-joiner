@@ -13,11 +13,12 @@ public class ImageCreatorMain {
 		final int height = Integer.parseInt(args[4]);
 		final String filename = args[5];
 		final String imageFormat = args[6];
-		final String mapType = args[7];
+		final String service = args[7];
+		final String mapType = args[8];
 
 		ImageCreator.builder().topLat(topLat).leftLon(leftLon)
 				.rightLon(rightLon).width(width).height(height)
 				.outputFile(filename).imageFormat(imageFormat).mapType(mapType)
-				.service(MapService.GOOGLE).create();
+				.service(MapService.valueOf(service)).create();
 	}
 }

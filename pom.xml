@@ -49,6 +49,7 @@
         <height>500</height>
         <output.file>${project.build.directory}/map.png</output.file>
         <image.format>PNG</image.format>
+        <map.service>GOOGLE</map.service>
         <map.type>s</map.type>
     </properties>
 
@@ -264,6 +265,7 @@
                         <argument>${height}</argument>
                         <argument>${output.file}</argument>
                         <argument>${image.format}</argument>
+                        <arguments>${map.service}</arguments>
                         <arguments>${map.type}</arguments>
                     </arguments>
                 </configuration>
