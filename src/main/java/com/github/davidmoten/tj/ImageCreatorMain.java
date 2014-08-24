@@ -18,6 +18,6 @@ public class ImageCreatorMain {
 		ImageCreator.builder().topLat(topLat).leftLon(leftLon)
 				.rightLon(rightLon).width(width).height(height)
 				.outputFile(filename).imageFormat(imageFormat).mapType(mapType)
-				.create();
+				.service(MapService.ARCGIS).create();
 	}
 }

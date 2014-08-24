@@ -25,9 +25,11 @@ public class ImageCreator {
 	private final int height;
 	private final String mapType;
 	private final TileCache cache;
+	private final MapService service;
 
 	public ImageCreator(double topLat, double leftLon, double rightLon,
-			int widthPixels, int heightPixels, String mapType, TileCache cache) {
+			int widthPixels, int heightPixels, String mapType, TileCache cache,
+			MapService service) {
 		this.topLat = topLat;
 		this.leftLon = leftLon;
 		this.rightLon = rightLon;
@@ -35,6 +37,7 @@ public class ImageCreator {
 		this.height = heightPixels;
 		this.mapType = mapType;
 		this.cache = cache;
+		this.service = service;
 	}
 
 	public static Builder builder() {
@@ -52,6 +55,7 @@ public class ImageCreator {
 		private TileCache cache = TileCache.instance();
 		private File outputFile = new File("target/map.png");
 		private String imageFormat = "PNG";
+		private MapService service = MapService.GOOGLE;
 
 		private Builder() {
 		}
@@ -109,9 +113,14 @@ public class ImageCreator {
 			return this;
 		}
 
+		public Builder service(MapService service) {
+			this.service = service;
+			return this;
+		}
+
 		public void create() {
 			new ImageCreator(topLat, leftLon, rightLon, width, height, mapType,
-					cache).createImage(outputFile, imageFormat);
+					cache, service).createImage(outputFile, imageFormat);
 		}
 	}
 
@@ -132,8 +141,8 @@ public class ImageCreator {
 	}
 
 	private void drawMap(Graphics2D g) {
-		final Coverage coverage = new TileFactory(mapType).getCoverage(topLat,
-				leftLon, rightLon, width, height);
+		final Coverage coverage = new TileFactory(service, mapType)
+				.getCoverage(topLat, leftLon, rightLon, width, height);
 
 		final int deltaY = coverage.getDeltaY();
 		final int deltaX = coverage.getDeltaX();
@@ -162,9 +171,9 @@ public class ImageCreator {
 
 	public static void createImage(double topLat, double leftLon,
 			double rightLon, int width, int height, String filename,
-			String imageFormat, String mapType) {
+			String imageFormat, MapService service, String mapType) {
 		new ImageCreator(topLat, leftLon, rightLon, width, height, mapType,
-				TileCache.instance()).createImage(new File(filename),
+				TileCache.instance(), service).createImage(new File(filename),
 				imageFormat);
 	}
 }

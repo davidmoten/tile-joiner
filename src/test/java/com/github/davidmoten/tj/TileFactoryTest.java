@@ -12,7 +12,7 @@ public class TileFactoryTest {
 
 	@Test
 	public void test() {
-		final TileFactory g = new TileFactory("m");
+		final TileFactory g = new TileFactory(MapService.GOOGLE, "m");
 		final Collection<TileUrl> tiles = g
 				.getCoverage(-35, 149, 150, 800, 600).getTiles();
 		final Collection<String> urls = new HashSet<>();

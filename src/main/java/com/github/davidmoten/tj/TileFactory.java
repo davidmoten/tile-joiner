@@ -16,13 +16,18 @@ public class TileFactory {
 	public static final int TILE_SIZE = 256;
 	private final String mapType;
 
-	public TileFactory(String mapType) {
+	private final MapService service;
+
+	public TileFactory(MapService service, String mapType) {
+		this.service = service;
 		this.mapType = mapType;
 	}
 
 	// https://mts1.google.com/vt/lyrs=m&x=1325&y=3143&z=13 -- normal
 	// https://mts1.google.com/vt/lyrs=y&x=1325&y=3143&z=13 -- satellite
 	// https://mts1.google.com/vt/lyrs=t&x=1325&y=3143&z=13 -- terrain
+	// http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{x}/{y}.png
+	// http://c.tile.openstreetmap.org/{z}/{x}/{y}.png
 
 	public Coverage getCoverage(double topLat, double leftLon, double rightLon,
 			int width, int height) {
@@ -73,7 +78,7 @@ public class TileFactory {
 
 		final List<TileUrl> tileUrls = new ArrayList<>();
 		for (final Tile tile : tiles) {
-			tileUrls.add(new TileUrl(tile, toUrl(tile, mapType)));
+			tileUrls.add(new TileUrl(tile, toUrl(tile, service, mapType)));
 		}
 
 		return new Coverage(tileUrls, deltaX, deltaY, scaledTileSize);
@@ -89,14 +94,20 @@ public class TileFactory {
 				/ Math.log(2))) + 1);
 	}
 
-	private static Optional<String> toUrl(Tile tile, String mapType) {
+	private static Optional<String> toUrl(Tile tile, MapService service,
+			String mapType) {
 		if (tile.getIndex().getY() >= pow2(tile.getZoom()))
 			return Optional.absent();
 		else
-			return Optional.of(String.format(
-					"https://mts1.google.com/vt/lyrs=%s&x=%s&y=%s&z=%s",
-					mapType, tile.getIndex().getX() % pow2(tile.getZoom()),
-					tile.getIndex().getY(), tile.getZoom()));
+			return Optional.of(service
+					.getUrlTemplate()
+					.replace(
+							"{x}",
+							(tile.getIndex().getX() % pow2(tile.getZoom()))
+									+ "")
+					.replace("{y}", tile.getIndex().getY() + "")
+					.replace("{z}", tile.getZoom() + "")
+					.replace("{layers}", mapType));
 	}
 
 	static TileIndex getIndexFor(double lat, double lon, int zoom) {
