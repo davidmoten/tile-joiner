@@ -1,7 +1,7 @@
 tile-joiner
 ===========
 
-Renders Google Maps tiles to a [BufferedImage](http://docs.oracle.com/javase/7/docs/api/java/awt/image/BufferedImage.html) 
+Renders service map tiles from Google Maps, ArcGIS, OpenStreetMaps to a [BufferedImage](http://docs.oracle.com/javase/7/docs/api/java/awt/image/BufferedImage.html) 
 in java and thence to a PNG for instance.
 
 Status: *pre-alpha*
@@ -67,6 +67,7 @@ ImageCreator.builder()
             .height(500)
 			.outputFile("target/map.png")
             .imageFormat("PNG")
+            .service(MapService.GOOGLE)
             .mapType(MapType.SATELLITE)
 			.create();
 ```
@@ -78,6 +79,7 @@ See also [ImageCreatorMain.java](src/main/java/com/github/davidmoten/tj/ImageCre
 Map types
 -----------
 
+Google Maps:
 * ```m``` = roads
 * ```s``` = satellite
 * ```y``` = hybrid
