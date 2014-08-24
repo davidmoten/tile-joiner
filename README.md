@@ -19,10 +19,11 @@ How to build
 To compiles, tests and builds the artifact locally:
 
  ```bash
- git clone https://github.com/davidmoten/tile-joiner.git
- cd tile-joiner
- mvn clean install
- ```
+git clone https://github.com/davidmoten/tile-joiner.git
+cd tile-joiner
+mvn clean install
+```
+
 Usage
 ----------
 You can generate an image using maven or direct from java. 
@@ -45,6 +46,17 @@ mvn exec:java
 ```
  
 ### Generate an image using java
+Add this dependency to your pom.xml:
+
+```xml
+<dependency>
+  <groupId>com.github.davidmoten</groupId>
+  <artifactId>tile-joiner</artifactId>
+  <version>0.1-SNAPSHOT</version>
+</dependency>
+```
+
+
 See [ImageCreatorMain.java](src/main/java/com/github/davidmoten/tj/ImageCreatorMain.java).
 
 Map types
