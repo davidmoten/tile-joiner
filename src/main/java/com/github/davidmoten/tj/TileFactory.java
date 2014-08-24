@@ -16,9 +16,9 @@ public class TileFactory {
 	public static final int TILE_SIZE = 256;
 	private final String mapType;
 
-	private final MapService service;
+	private final Template service;
 
-	public TileFactory(MapService service, String mapType) {
+	public TileFactory(Template service, String mapType) {
 		this.service = service;
 		this.mapType = mapType;
 	}
@@ -94,13 +94,13 @@ public class TileFactory {
 				/ Math.log(2))) + 1);
 	}
 
-	private static Optional<String> toUrl(Tile tile, MapService service,
+	private static Optional<String> toUrl(Tile tile, Template service,
 			String mapType) {
 		if (tile.getIndex().getY() >= pow2(tile.getZoom()))
 			return Optional.absent();
 		else
 			return Optional.of(service
-					.getUrlTemplate()
+					.getTemplate()
 					.replace(
 							"{x}",
 							(tile.getIndex().getX() % pow2(tile.getZoom()))

@@ -25,11 +25,11 @@ public class ImageCreator {
 	private final int height;
 	private final String mapType;
 	private final TileCache cache;
-	private final MapService service;
+	private final Template service;
 
 	public ImageCreator(double topLat, double leftLon, double rightLon,
 			int widthPixels, int heightPixels, String mapType, TileCache cache,
-			MapService service) {
+			Template service) {
 		this.topLat = topLat;
 		this.leftLon = leftLon;
 		this.rightLon = rightLon;
@@ -55,7 +55,7 @@ public class ImageCreator {
 		private TileCache cache = TileCache.instance();
 		private File outputFile = new File("target/map.png");
 		private String imageFormat = "PNG";
-		private MapService service = MapService.GOOGLE;
+		private Template service = MapService.GOOGLE;
 
 		private Builder() {
 		}
@@ -113,8 +113,18 @@ public class ImageCreator {
 			return this;
 		}
 
-		public Builder service(MapService service) {
+		public Builder service(Template service) {
 			this.service = service;
+			return this;
+		}
+
+		public Builder service(final String template) {
+			this.service = new Template() {
+				@Override
+				public String getTemplate() {
+					return template;
+				}
+			};
 			return this;
 		}
 
@@ -171,7 +181,7 @@ public class ImageCreator {
 
 	public static void createImage(double topLat, double leftLon,
 			double rightLon, int width, int height, String filename,
-			String imageFormat, MapService service, String mapType) {
+			String imageFormat, Template service, String mapType) {
 		new ImageCreator(topLat, leftLon, rightLon, width, height, mapType,
 				TileCache.instance(), service).createImage(new File(filename),
 				imageFormat);
