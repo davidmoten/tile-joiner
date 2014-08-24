@@ -56,7 +56,7 @@ Add this dependency to your pom.xml:
 </dependency>
 ```
 
-Here's an example:
+Then download, cache, and join tiles and write the image to a file like this:
 
 ```java
 ImageCreator.builder()
