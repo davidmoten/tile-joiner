@@ -56,8 +56,24 @@ Add this dependency to your pom.xml:
 </dependency>
 ```
 
+Here's an example:
 
-See [ImageCreatorMain.java](src/main/java/com/github/davidmoten/tj/ImageCreatorMain.java).
+```java
+ImageCreator.builder()
+            .topLat(25)
+            .leftLon(50)
+			.rightLon(-140)
+            .width(800)
+            .height(500)
+			.outputFile("target/map.png")
+            .imageFormat("PNG")
+            .mapType(MapType.SATELLITE)
+			.create();
+```
+
+See also [ImageCreatorMain.java](src/main/java/com/github/davidmoten/tj/ImageCreatorMain.java).
+
+
 
 Map types
 -----------
