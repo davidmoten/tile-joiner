@@ -34,7 +34,7 @@ To create an image joined and cropped from google maps tiles:
 
 ```
 mvn exec:java -DtopLat=25 -DleftLon=50 -DrightLon=-140 -Dwidth=800 -Dheight=500 \
-  -Dmap.type=s -Dimage.format=PNG -Doutput.file=target/map.png
+  -Dmap.type=s -Dimage.format=PNG -Doutput.file=target/map.png -Dmap.service=GOOGLE
 ```
 
 The image wil be a Google Maps Satellite map and is created in ```target/map.png``` by default.
@@ -74,7 +74,11 @@ ImageCreator.builder()
 
 See also [ImageCreatorMain.java](src/main/java/com/github/davidmoten/tj/ImageCreatorMain.java).
 
-
+Map services
+---------------
+* GOOGLE
+* ARCGIS
+* OPENSTREETMAP
 
 Map types
 -----------
