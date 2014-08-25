@@ -118,6 +118,15 @@ public class ImageCreator {
 			return this;
 		}
 
+		/**
+		 * The <code>template</code> parameter is a url template where {x} is
+		 * replaced with the x index of the tile, {y} is replaced with the y
+		 * index of the tile, {z} is replaced with the zoom value, {layers} is
+		 * replaced with the layer name(s). See {@link MapService} for examples.
+		 * 
+		 * @param template
+		 * @return
+		 */
 		public Builder service(final String template) {
 			this.service = new Template() {
 				@Override
