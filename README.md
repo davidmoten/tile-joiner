@@ -13,6 +13,8 @@ Features
 * Calculates optimal zoom level
 * Handles 180/-180 longitude boundary
 * Caches tiles to the local file system
+* Supports Google Maps, ArcGIS, OpenStreetMap
+* Supports custom map service via url template
 
 How to build
 -------------
