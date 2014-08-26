@@ -8,6 +8,10 @@ Status: *pre-alpha*
 
 <img src="https://raw.githubusercontent.com/davidmoten/tile-joiner/master/src/docs/map.png"/>
 
+Continuous integration with Jenkins: <a href="https://xuml-tools.ci.cloudbees.com/"><img src="https://xuml-tools.ci.cloudbees.com/job/tile-joiner/badge/icon"/></a>
+
+Maven site reports are [here](http://davidmoten.github.io/tile-joiner/index.html) including [javadoc](http://davidmoten.github.io/tile-joiner/apidocs/index.html).
+
 Features
 ---------------
 * Calculates optimal zoom level
