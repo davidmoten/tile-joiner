@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.google.common.base.Preconditions;
 
-public class Coverage {
+class Coverage {
 	private final List<TileUrl> tiles;
 	private final int minIndexX;
 	private final int maxIndexX;
@@ -13,8 +13,7 @@ public class Coverage {
 	private final int deltaY;
 	private final int scaledTileSize;
 
-	public Coverage(List<TileUrl> tiles, int deltaX, int deltaY,
-			int scaledTileSize) {
+	Coverage(List<TileUrl> tiles, int deltaX, int deltaY, int scaledTileSize) {
 		Preconditions.checkArgument(!tiles.isEmpty(), "tiles is empty!");
 		this.tiles = tiles;
 		this.deltaX = deltaX;
@@ -52,31 +51,31 @@ public class Coverage {
 		return min;
 	}
 
-	public List<TileUrl> getTiles() {
+	List<TileUrl> getTiles() {
 		return tiles;
 	}
 
-	public int getMinIndexX() {
+	int getMinIndexX() {
 		return minIndexX;
 	}
 
-	public int getMaxIndexX() {
+	int getMaxIndexX() {
 		return maxIndexX;
 	}
 
-	public int getMinIndexY() {
+	int getMinIndexY() {
 		return minIndexY;
 	}
 
-	public int getDeltaX() {
+	int getDeltaX() {
 		return deltaX;
 	}
 
-	public int getDeltaY() {
+	int getDeltaY() {
 		return deltaY;
 	}
 
-	public int getScaledTileSize() {
+	int getScaledTileSize() {
 		return scaledTileSize;
 	}
 

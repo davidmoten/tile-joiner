@@ -1,20 +1,20 @@
 package com.github.davidmoten.tj;
 
-public class Tile {
+class Tile {
 
 	private final TileIndex index;
 	private final Integer zoom;
 
-	public Tile(TileIndex index, Integer zoom) {
+	Tile(TileIndex index, Integer zoom) {
 		this.index = index;
 		this.zoom = zoom;
 	}
 
-	public TileIndex getIndex() {
+	TileIndex getIndex() {
 		return index;
 	}
 
-	public Integer getZoom() {
+	Integer getZoom() {
 		return zoom;
 	}
 

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Optional;
 
-public class TileFactory {
+class TileFactory {
 
 	private static final Logger log = LoggerFactory
 			.getLogger(TileFactory.class);
@@ -18,7 +18,7 @@ public class TileFactory {
 
 	private final Template service;
 
-	public TileFactory(Template service, String mapType) {
+	TileFactory(Template service, String mapType) {
 		this.service = service;
 		this.mapType = mapType;
 	}
@@ -29,7 +29,7 @@ public class TileFactory {
 	// http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{x}/{y}.png
 	// http://c.tile.openstreetmap.org/{z}/{x}/{y}.png
 
-	public Coverage getCoverage(double topLat, double leftLon, double rightLon,
+	Coverage getCoverage(double topLat, double leftLon, double rightLon,
 			int width, int height) {
 
 		final double diffLon;
