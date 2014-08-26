@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ImageCreator {
+public final class ImageCreator {
 
 	private static final Logger log = LoggerFactory
 			.getLogger(ImageCreator.class);
@@ -44,7 +44,7 @@ public class ImageCreator {
 		return new Builder();
 	}
 
-	public static class Builder {
+	public final static class Builder {
 
 		private double topLat;
 		private double leftLon;

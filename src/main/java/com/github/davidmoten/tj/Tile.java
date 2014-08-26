@@ -1,6 +1,6 @@
 package com.github.davidmoten.tj;
 
-class Tile {
+final class Tile {
 
 	private final TileIndex index;
 	private final Integer zoom;

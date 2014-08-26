@@ -1,6 +1,6 @@
 package com.github.davidmoten.tj;
 
-public class ImageCreatorMain {
+public final class ImageCreatorMain {
 
 	public static void main(String[] args) {
 		System.setProperty("https.proxyHost", "proxy.amsa.gov.au");

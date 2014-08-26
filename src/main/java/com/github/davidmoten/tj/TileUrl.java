@@ -2,7 +2,7 @@ package com.github.davidmoten.tj;
 
 import com.google.common.base.Optional;
 
-class TileUrl {
+final class TileUrl {
 
 	private final Tile tile;
 	private final Optional<String> url;

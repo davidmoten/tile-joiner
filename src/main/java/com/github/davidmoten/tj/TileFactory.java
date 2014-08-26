@@ -8,12 +8,12 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Optional;
 
-class TileFactory {
+final class TileFactory {
 
 	private static final Logger log = LoggerFactory
 			.getLogger(TileFactory.class);
 
-	public static final int TILE_SIZE = 256;
+	static final int TILE_SIZE = 256;
 	private final String mapType;
 
 	private final Template service;
@@ -140,12 +140,12 @@ class TileFactory {
 		return (int) y / 256;
 	}
 
-	public static int latToYInTile(double lat, int zoom) {
+	static int latToYInTile(double lat, int zoom) {
 		final double y = latToY(lat, zoom);
 		return (int) Math.round(Math.floor(y - TILE_SIZE * ((int) y / 256)));
 	}
 
-	public static int lonToXInTile(double lon, int zoom) {
+	static int lonToXInTile(double lon, int zoom) {
 		final double longTileSize = 360 / (Math.pow(2, zoom));
 
 		// find the tile coordinates

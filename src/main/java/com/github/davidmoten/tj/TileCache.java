@@ -16,7 +16,7 @@ import com.google.common.base.Charsets;
 import com.google.common.io.BaseEncoding;
 import com.google.common.io.ByteStreams;
 
-public class TileCache {
+public final class TileCache {
 
 	private static final Logger log = LoggerFactory.getLogger(TileCache.class);
 
@@ -37,22 +37,22 @@ public class TileCache {
 	}
 
 	public BufferedImage getImage(String url) {
-		String key = "tile-joiner-"
+		final String key = "tile-joiner-"
 				+ BaseEncoding.base64Url().encode(
 						url.getBytes(Charsets.US_ASCII));
-		File file = new File(directory, key);
+		final File file = new File(directory, key);
 		if (!file.exists()) {
 			try {
 				log.info("getting " + url);
-				URL u = new URL(url);
+				final URL u = new URL(url);
 				file.getParentFile().mkdirs();
-				FileOutputStream fos = new FileOutputStream(file);
-				InputStream is = u.openStream();
+				final FileOutputStream fos = new FileOutputStream(file);
+				final InputStream is = u.openStream();
 				ByteStreams.copy(is, fos);
 				fos.close();
 				is.close();
 				log.info("got " + url);
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				file.delete();
 				throw new RuntimeException(e);
 			}
@@ -60,7 +60,7 @@ public class TileCache {
 			log.info("url in cache already: " + url);
 		try {
 			return ImageIO.read(file);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
 	}

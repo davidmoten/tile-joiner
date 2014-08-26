@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.google.common.base.Preconditions;
 
-class Coverage {
+final class Coverage {
 	private final List<TileUrl> tiles;
 	private final int minIndexX;
 	private final int maxIndexX;
