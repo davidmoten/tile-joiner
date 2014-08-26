@@ -70,13 +70,13 @@ public class TileFactory {
 
 		final int maxIndexY = topIndexY + height / scaledTileSize + 1;
 
-		final List<Tile> tiles = new ArrayList<>();
+		final List<Tile> tiles = new ArrayList<Tile>();
 		for (int x = leftIndexX; x <= virtualRightIndexX; x++)
 			for (int y = topIndexY; y <= maxIndexY; y++) {
 				tiles.add(new Tile(new TileIndex(x, y), zoom));
 			}
 
-		final List<TileUrl> tileUrls = new ArrayList<>();
+		final List<TileUrl> tileUrls = new ArrayList<TileUrl>();
 		for (final Tile tile : tiles) {
 			tileUrls.add(new TileUrl(tile, toUrl(tile, service, mapType)));
 		}
