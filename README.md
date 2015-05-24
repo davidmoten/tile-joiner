@@ -39,7 +39,7 @@ You can generate an image using maven or direct from java.
 To create an image joined and cropped from google maps tiles:
 
 ```
-mvn exec:java -DtopLat=25 -DleftLon=50 -DrightLon=-140 -Dwidth=800 -Dheight=500 \
+mvn compile exec:java -DtopLat=25 -DleftLon=50 -DrightLon=-140 -Dwidth=800 -Dheight=500 \
   -Dmap.type=s -Dimage.format=PNG -Doutput.file=target/map.png -Dmap.service=GOOGLE
 ```
 
